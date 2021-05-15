@@ -1,0 +1,2 @@
+SELECT * FROM paciente LIMIT(10) OFFSET(0);
+SELECT * FROM paciente LIMIT(10) OFFSET(10);

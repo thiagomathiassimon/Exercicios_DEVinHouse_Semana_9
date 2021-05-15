@@ -1,0 +1,1 @@
+UPDATE paciente SET nome = 'Romeu' WHERE codigo = 10;

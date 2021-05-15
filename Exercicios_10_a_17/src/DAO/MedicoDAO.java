@@ -3,6 +3,7 @@ package DAO;
 import Model.Conexao;
 import Model.Medico;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -118,6 +119,35 @@ public class MedicoDAO implements IGerenciamentoDAO {
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             return false;
+        }
+    }
+
+    public List<Medico> listarMedicosSemAtendimento() {
+        try {
+            PreparedStatement preparedStatement = this.conexao.getConexao()
+                    .prepareStatement("SELECT * FROM medico m LEFT JOIN atendimento a ON m.codigo = a.medico WHERE a.medico IS NULL;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Medico> medicos = new ArrayList<>();
+
+            while (resultSet.next()){
+                Medico medico = new Medico();
+
+                medico.setCodigo(resultSet.getInt("codigo"));
+                medico.setNome(resultSet.getString("nome"));
+                medico.setCrm(resultSet.getString("crm"));
+
+                medicos.add(medico);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+            return medicos;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
         }
     }
 }

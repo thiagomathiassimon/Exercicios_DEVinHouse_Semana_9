@@ -1,0 +1,1 @@
+DELETE FROM paciente WHERE nome LIKE 'J%';

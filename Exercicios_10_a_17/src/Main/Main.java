@@ -37,13 +37,21 @@ public class Main {
 
         pacienteDAO.setPaciente(paciente);
         pacienteDAO.setConexao(conexao);
+//
+//       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",
+//                "Agendado");
+//
+//        System.out.println(inseriu);
 
-       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",
-                "Agendado");
+        paciente.setCodigo(28);
 
-        System.out.println(inseriu);
+        boolean excluiu = pacienteDAO.excluirPacienteEAlterarAsFichasDeAtendimentoParaAnuladas();
+
+        System.out.println(excluiu);
 
         conexao.confirmarTransacao();
+
+
 
 
 

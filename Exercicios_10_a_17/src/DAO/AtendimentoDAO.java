@@ -96,12 +96,13 @@ public class AtendimentoDAO implements IGerenciamentoDAO {
                     .prepareStatement("UPDATE atendimento SET paciente = ?, descricao = ?, medico = ?, situacao = ?, valor = ?, data = ? " +
                             "WHERE codigo = ?");
 
-            preparedStatement.setString(1, atendimento.getDescricao());
-            preparedStatement.setInt(2, atendimento.getMedico());
-            preparedStatement.setString(3, atendimento.getSituacao());
-            preparedStatement.setDouble(4, atendimento.getValor());
-            preparedStatement.setTimestamp(5, atendimento.getData());
-            preparedStatement.setInt(6, atendimento.getCodigo());
+            preparedStatement.setInt(1, atendimento.getPacinte());
+            preparedStatement.setString(2, atendimento.getDescricao());
+            preparedStatement.setInt(3, atendimento.getMedico());
+            preparedStatement.setString(4, atendimento.getSituacao());
+            preparedStatement.setDouble(5, atendimento.getValor());
+            preparedStatement.setTimestamp(6, atendimento.getData());
+            preparedStatement.setInt(7, atendimento.getCodigo());
 
             preparedStatement.executeUpdate();
 

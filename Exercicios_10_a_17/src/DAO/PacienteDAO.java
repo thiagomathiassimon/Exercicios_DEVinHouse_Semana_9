@@ -346,4 +346,25 @@ public class PacienteDAO implements IGerenciamentoDAO{
         return false;
     }
 
+    public boolean excluirPacienteEAlterarAsFichasDeAtendimentoParaAnuladas() {
+        AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
+        atendimentoDAO.setConexao(this.conexao);
+
+        List<Atendimento> atendimentos = atendimentoDAO.listarTodosOsAtendimentos();
+
+        boolean excluiu = false;
+        for (Atendimento atendimento : atendimentos){
+            System.out.println(paciente.getCodigo());
+            if (paciente.getCodigo() == atendimento.getPacinte()){
+                atendimentoDAO.setAtendimento(atendimento);
+                atendimentoDAO.excluir();
+                excluiu = true;
+            }
+        }
+
+        this.excluir();
+
+        return excluiu;
+    }
+
 }

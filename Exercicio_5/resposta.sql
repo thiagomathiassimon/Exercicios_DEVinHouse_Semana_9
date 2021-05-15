@@ -1,0 +1,2 @@
+SELECT EXTRACT(MONTH FROM nascimento), COUNT (*) FROM paciente 
+	GROUP BY EXTRACT(MONTH FROM nascimento);

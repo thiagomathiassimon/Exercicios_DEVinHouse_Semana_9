@@ -1,0 +1,1 @@
+SELECT MIN(AGE(nascimento)), MAX(AGE(NASCIMENTO)) FROM paciente;

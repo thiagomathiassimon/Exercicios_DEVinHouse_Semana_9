@@ -69,14 +69,14 @@ public class AtendimentoDAO implements IGerenciamentoDAO {
 
         try {
             PreparedStatement preparedStatement = this.conexao.getConexao()
-                    .prepareStatement("INSERT INTO atendimento (paciente, descricao, medico, situacao, valor, data) VALUES (?, ?, ?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO atendimento (codigo, paciente, descricao, medico, situacao, valor, data) VALUES (?, ?, ?, ?, ?, ?, NOW())");
 
             preparedStatement.setInt(1, atendimento.getCodigo());
-            preparedStatement.setString(2, atendimento.getDescricao());
-            preparedStatement.setInt(3, atendimento.getMedico());
-            preparedStatement.setString(4, atendimento.getSituacao());
-            preparedStatement.setDouble(5, atendimento.getValor());
-            preparedStatement.setTimestamp(6, atendimento.getData());
+            preparedStatement.setInt(2, atendimento.getPacinte());
+            preparedStatement.setString(3, atendimento.getDescricao());
+            preparedStatement.setInt(4, atendimento.getMedico());
+            preparedStatement.setString(5, atendimento.getSituacao());
+            preparedStatement.setDouble(6, atendimento.getValor());
 
             preparedStatement.executeUpdate();
 

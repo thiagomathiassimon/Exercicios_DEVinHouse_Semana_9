@@ -1,12 +1,12 @@
 package DAO;
 
+import Model.Atendimento;
 import Model.Conexao;
 import Model.Medico;
 import Model.Paciente;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sound.midi.SysexMessage;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -299,6 +299,51 @@ public class PacienteDAO implements IGerenciamentoDAO{
             sqlException.printStackTrace();
             return null;
         }
+    }
+
+    public boolean inserirPacientesReferenciandoMedicoECriandoAtendimento(String crmDoMedico, String descricao, String situacao) {
+
+        MedicoDAO medicoDAO = new MedicoDAO();
+        AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
+
+        medicoDAO.setConexao(this.conexao);
+        atendimentoDAO.setConexao(this.conexao);
+
+        List<Medico> medicos = medicoDAO.listarTodosOsMedicos();
+
+        for (Medico medico : medicos) {
+            if (medico.getCrm().equals(crmDoMedico)){
+                System.out.println(this.inserir());
+
+                List<Atendimento> atendimentos = atendimentoDAO.listarTodosOsAtendimentos();
+                int maiorCodigoDeAtendimento = 0;
+                for (Atendimento atendimento : atendimentos){
+                    if (atendimento.getCodigo() > maiorCodigoDeAtendimento){
+                        maiorCodigoDeAtendimento = atendimento.getCodigo();
+                    }
+                }
+
+                int maiorCodigoDePaciente = 0;
+                for(Paciente paciente : this.listarTodosOsPacientes()){
+                    if (paciente.getCodigo() > maiorCodigoDePaciente){
+                        maiorCodigoDePaciente = paciente.getCodigo();
+                    }
+                }
+
+                Atendimento atendimento = new Atendimento();
+                atendimento.setCodigo(maiorCodigoDeAtendimento + 1);
+                atendimento.setPacinte(maiorCodigoDePaciente);
+                atendimento.setDescricao(descricao);
+                atendimento.setMedico(medico.getCodigo());
+                atendimento.setSituacao(situacao);
+
+                atendimentoDAO.setAtendimento(atendimento);
+                atendimentoDAO.inserir();
+
+                return true;
+            }
+        }
+        return false;
     }
 
 }

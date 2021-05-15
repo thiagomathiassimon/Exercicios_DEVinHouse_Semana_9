@@ -6,12 +6,17 @@ import Model.Conexao;
 import Model.Medico;
 import Model.Paciente;
 
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Conexao conexao = new Conexao();
 
@@ -24,9 +29,28 @@ public class Main {
         MedicoDAO medicoDAO = new MedicoDAO();
         medicoDAO.setConexao(conexao);
 
-        for (Medico medico : medicoDAO.listarMedicosSemAtendimento()){
-            System.out.println("Nome: " + medico.getNome() + " | CRM: " + medico.getCrm());
-        }
+        Paciente paciente = new Paciente();
+        paciente.setNome("Getudres");
+        paciente.setNascimento(Date.valueOf("1977-09-11"));
+        paciente.setEmail("gertrudes@gmail.com");
+        paciente.setTelefone("54966553300");
+
+        pacienteDAO.setPaciente(paciente);
+        pacienteDAO.setConexao(conexao);
+
+       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",
+                "Agendado");
+
+        System.out.println(inseriu);
+
+        conexao.confirmarTransacao();
+
+
+
+//
+//        for (Medico medico : medicoDAO.listarMedicosSemAtendimento()){
+//            System.out.println("Nome: " + medico.getNome() + " | CRM: " + medico.getCrm());
+//        }
 
 //        for(List<Paciente> pacientes : pacienteDAO.listarTodosOsPacientesDeModoPaginado()){
 //            for (Paciente paciente : pacientes){

@@ -1,0 +1,1 @@
+SELECT * FROM paciente WHERE EXTRACT(YEAR FROM nascimento) = '1990';

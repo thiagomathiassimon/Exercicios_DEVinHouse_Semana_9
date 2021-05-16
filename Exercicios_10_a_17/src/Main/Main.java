@@ -30,26 +30,29 @@ public class Main {
         medicoDAO.setConexao(conexao);
 
         Paciente paciente = new Paciente();
-        paciente.setNome("Getudres");
+        paciente.setNome("Gertrudes");
         paciente.setNascimento(Date.valueOf("1977-09-11"));
         paciente.setEmail("gertrudes@gmail.com");
         paciente.setTelefone("54966553300");
 
         pacienteDAO.setPaciente(paciente);
         pacienteDAO.setConexao(conexao);
-//
+
+        System.out.println(medicoDAO.buscarMedicoComAMaiorQuantidadeDePacientes());
+
+
 //       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",
 //                "Agendado");
 //
 //        System.out.println(inseriu);
-
-        paciente.setCodigo(28);
-
-        boolean excluiu = pacienteDAO.excluirPacienteEAlterarAsFichasDeAtendimentoParaAnuladas();
-
-        System.out.println(excluiu);
-
-        conexao.confirmarTransacao();
+//
+////        paciente.setCodigo(28);
+////
+////        boolean excluiu = pacienteDAO.excluirPacienteEAlterarAsFichasDeAtendimentoParaAnuladas();
+////
+////        System.out.println(excluiu);
+//
+//        conexao.confirmarTransacao();
 
 
 

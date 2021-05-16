@@ -150,4 +150,32 @@ public class MedicoDAO implements IGerenciamentoDAO {
             return null;
         }
     }
+
+    public String buscarMedicoComAMaiorQuantidadeDePacientes(){
+        try {
+            PreparedStatement preparedStatement = this.conexao.getConexao()
+                    .prepareStatement("SELECT m.codigo, m.nome, m.crm, resultado.count as \"pacientes\" FROM medico m INNER JOIN (SELECT * FROM \n" +
+                            "\t(SELECT a.medico, COUNT(a.paciente) FROM atendimento a GROUP BY a.medico) as atend WHERE atend.count = (SELECT MAX(registro.count)\n" +
+                            "\tFROM (SELECT a.medico, COUNT(a.paciente) FROM atendimento a GROUP BY a.medico) as registro)) \n" +
+                            "\tas resultado ON resultado.medico = m.codigo;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            String result = "";
+
+            result += "Código: " + resultSet.getInt("codigo") + "\nNome: " + resultSet.getString("nome") + "\nCRM: "
+                    + resultSet.getString("crm") + "\nNúmero de pacientes: " + resultSet.getString("pacientes");
+
+            resultSet.close();
+            preparedStatement.close();
+
+            return result;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return "";
+        }
+    }
+
 }

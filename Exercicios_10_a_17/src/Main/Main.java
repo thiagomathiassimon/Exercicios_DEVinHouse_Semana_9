@@ -1,5 +1,6 @@
 package Main;
 
+import DAO.AtendimentoDAO;
 import DAO.MedicoDAO;
 import DAO.PacienteDAO;
 import Model.Conexao;
@@ -38,9 +39,14 @@ public class Main {
         pacienteDAO.setPaciente(paciente);
         pacienteDAO.setConexao(conexao);
 
+        AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
+        atendimentoDAO.setConexao(conexao);
+
        // System.out.println(medicoDAO.buscarMedicoComAMaiorQuantidadeDePacientes());
 
-        System.out.println(pacienteDAO.listarPacienteEMedico());
+    //    System.out.println(pacienteDAO.listarPacienteEMedico());
+
+        System.out.println(atendimentoDAO.buscarAtendimentosDePacientesComMaisDeUmMedico());
 
 
 //       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",

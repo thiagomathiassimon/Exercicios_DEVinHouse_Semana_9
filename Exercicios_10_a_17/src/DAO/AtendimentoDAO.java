@@ -134,4 +134,44 @@ public class AtendimentoDAO implements IGerenciamentoDAO {
             return false;
         }
     }
+
+    public List<Atendimento> buscarAtendimentosDePacientesComMaisDeUmMedico() {
+        List<Atendimento> list = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = this.conexao.getConexao()
+                    .prepareStatement("""
+                            SELECT * FROM (SELECT a.paciente, COUNT(a.medico) FROM atendimento a
+                                        GROUP BY a.paciente) as result\s
+                                        INNER JOIN atendimento a\s
+                                        ON a.paciente = result.paciente
+                                        WHERE result.count > 1
+                                    """);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+
+                Atendimento atendimento = new Atendimento();
+
+                atendimento.setCodigo(resultSet.getInt("codigo"));
+                atendimento.setPacinte(resultSet.getInt("paciente"));
+                atendimento.setDescricao(resultSet.getString("descricao"));
+                atendimento.setMedico(resultSet.getInt("medico"));
+                atendimento.setSituacao(resultSet.getString("situacao"));
+                atendimento.setValor(resultSet.getDouble("valor"));
+                atendimento.setData(resultSet.getTimestamp("data"));
+
+                list.add(atendimento);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return list;
+    }
+
 }

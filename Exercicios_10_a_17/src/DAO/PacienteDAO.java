@@ -4,6 +4,7 @@ import Model.Atendimento;
 import Model.Conexao;
 import Model.Medico;
 import Model.Paciente;
+import dto.MedicoEPacienteDTO;
 
 import javax.sound.midi.SysexMessage;
 import java.sql.*;
@@ -365,6 +366,48 @@ public class PacienteDAO implements IGerenciamentoDAO{
         this.excluir();
 
         return excluiu;
+    }
+
+    public List<MedicoEPacienteDTO> listarPacienteEMedico() {
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = this.conexao.getConexao()
+                    .prepareStatement("SELECT p.codigo as idPaciente, p.nome as nomePaciente, p.email, p.nascimento, p.telefone, " +
+                            " m.codigo as idMedico, m.nome as nomeMedico, m.crm FROM paciente p INNER JOIN atendimento a " +
+                            "ON a.paciente = p.codigo INNER JOIN medico m ON m.codigo = a.medico;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<MedicoEPacienteDTO> list = new ArrayList<>();
+
+            while (resultSet.next()){
+               MedicoEPacienteDTO medicoEPacienteDTO = new MedicoEPacienteDTO();
+
+               Medico medico = new Medico();
+               Paciente paciente = new Paciente();
+
+               paciente.setCodigo(resultSet.getInt("idPaciente"));
+               paciente.setNome(resultSet.getString("nomePaciente"));
+               paciente.setEmail(resultSet.getString("email"));
+               paciente.setTelefone(resultSet.getString("telefone"));
+
+               medico.setCodigo(resultSet.getInt("idMedico"));
+               medico.setNome(resultSet.getString("nomeMedico"));
+               medico.setCrm(resultSet.getString("crm"));
+
+               medicoEPacienteDTO.setPaciente(paciente);
+               medicoEPacienteDTO.setMedico(medico);
+
+               list.add(medicoEPacienteDTO);
+            }
+
+            return list;
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
+        }
     }
 
 }

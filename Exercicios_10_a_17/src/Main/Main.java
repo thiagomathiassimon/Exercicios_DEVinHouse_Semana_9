@@ -38,7 +38,9 @@ public class Main {
         pacienteDAO.setPaciente(paciente);
         pacienteDAO.setConexao(conexao);
 
-        System.out.println(medicoDAO.buscarMedicoComAMaiorQuantidadeDePacientes());
+       // System.out.println(medicoDAO.buscarMedicoComAMaiorQuantidadeDePacientes());
+
+        System.out.println(pacienteDAO.listarPacienteEMedico());
 
 
 //       boolean inseriu = pacienteDAO.inserirPacientesReferenciandoMedicoECriandoAtendimento("7799/RS", "Tratamento cardiológico",

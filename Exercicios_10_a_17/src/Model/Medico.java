@@ -29,4 +29,13 @@ public class Medico {
     public void setCrm(String crm) {
         this.crm = crm;
     }
+
+    @Override
+    public String toString() {
+        return "Medico{" +
+                "codigo=" + codigo +
+                ", nome='" + nome + '\'' +
+                ", crm='" + crm + '\'' +
+                '}';
+    }
 }

@@ -67,4 +67,17 @@ public class Atendimento {
     public void setData(Timestamp data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Atendimento{" +
+                "codigo=" + codigo +
+                ", pacinte=" + pacinte +
+                ", descricao='" + descricao + '\'' +
+                ", medico=" + medico +
+                ", situacao='" + situacao + '\'' +
+                ", valor=" + valor +
+                ", data=" + data +
+                '}';
+    }
 }
